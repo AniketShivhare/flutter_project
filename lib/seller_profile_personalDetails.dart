@@ -1,7 +1,9 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_project/services/User_api.dart';
-
+import 'package:http/http.dart' as http;
 import 'apis/Seller.dart';
 
 class SellerProfilePersonalDetails extends StatefulWidget {
@@ -34,7 +36,32 @@ class _SellerProfilePersonalDetailsState extends State<SellerProfilePersonalDeta
   }
   Future<void> postPersonalDetails() async {
 
-  }
+
+      Map<String, dynamic> json = {
+        "ownerName": nameController,
+        "phone":phoneController,
+
+      };
+      final apiUrl = 'https://api/seller/:sellerid/product';
+
+      var uri = Uri.parse(apiUrl);
+      try {
+        final response = await http.post(
+          uri,
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+          },
+          body: jsonEncode(json),
+        );
+
+        if (response.statusCode == 201) {
+        } else {
+        }
+      } catch (e) {
+
+      }
+    }
+
 
   @override
   Widget build(BuildContext context) {

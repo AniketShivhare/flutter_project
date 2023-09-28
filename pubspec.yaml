@@ -42,6 +42,8 @@ dependencies:
   badges: ^3.1.1
   provider: ^6.0.5
   google_fonts: ^4.0.3
+  geolocator: ^9.0.1
+  day_picker: ^2.2.0
 
 dev_dependencies:
   flutter_test:

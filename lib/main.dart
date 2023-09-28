@@ -45,6 +45,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project/registeration.dart';
 import 'package:flutter_project/seller_profile_option.dart';
 import 'package:flutter_project/language_selection_page.dart';
 import 'package:flutter_project/logIn_Screen.dart';
@@ -73,210 +74,186 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF08FFC8),),
         useMaterial3: true,
       ),
-      home: const profileOptions(),
+      home: Regest(),
     );
   }
 }
+
+
+
 //
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({super.key, required this.title});
-//   final String title;
+// import 'package:day_picker/day_picker.dart';
+// import 'package:flutter/material.dart';
 //
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
+// void main() {
+//   runApp(MyApp());
 // }
 //
-// class _MyHomePageState extends State<MyHomePage> {
-//   var nameController = TextEditingController(text: "initial_value");
-//   var phoneController = TextEditingController(text: "initial number");
-//   var emailController = TextEditingController(text: "initial email");
-//   var addressController = TextEditingController(text: "initial address");
+// class MyApp extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: HomePage(),
+//     );
+//   }
+// }
+//
+// class HomePage extends StatelessWidget {
+//   final List<DayInWeek> _days = [
+//     DayInWeek("Mon", dayKey: "monday"),
+//     DayInWeek("Tue", dayKey: "tuesday"),
+//     DayInWeek("Wed", dayKey: "wednesday"),
+//     DayInWeek("Thu", dayKey: "thursday"),
+//     DayInWeek("Fri", dayKey: "friday"),
+//     DayInWeek("Sat", dayKey: "saturday", isSelected: true),
+//     DayInWeek("Sun", dayKey: "sunday", isSelected: true),
+//   ];
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final customWidgetKey = new GlobalKey<SelectWeekDaysState>();
+//
+//     SelectWeekDays selectWeekDays = SelectWeekDays(
+//       key: customWidgetKey,
+//       fontSize: 14,
+//       fontWeight: FontWeight.w500,
+//       days: _days,
+//       border: false,
+//       width: MediaQuery.of(context).size.width / 1.4,
+//       boxDecoration: BoxDecoration(
+//         color: Colors.red,
+//         borderRadius: BorderRadius.circular(30.0),
+//       ),
+//       onSelect: (values) {
+//         print(values);
+//       },
+//     );
 //
 //     return Scaffold(
-//         appBar: AppBar(
+//       appBar: AppBar(
+//         title: Text("Select days in week"),
+//       ),
+//       body: Column(
+//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//         children: [
 //
-//           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+//           // Padding(
+//           //   padding: const EdgeInsets.all(8.0),
+//           //   child: SelectWeekDays(
+//           //     fontSize: 14,
+//           //     fontWeight: FontWeight.w500,
+//           //     days: _days,
+//           //     onSelect: (values) {
+//           //       print(values);
+//           //     },
+//           //   ),
+//           // ),
 //
-//           title: Text("Profile page"),
-//         ),
-//         body:  SingleChildScrollView(
-//           child: Container(
-//             color: Colors.white12,
-//             child: Padding(
-//               padding: const EdgeInsets.all(30.0),
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.center,
-//                 // mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   const SizedBox(
-//                       height:20
-//                   ),
-//                   const CircleAvatar(
-//                     radius: 60,
-//                     backgroundImage: AssetImage('assets/images/dark.jpg'),
-//                   ),
-//                   const SizedBox(
-//                       height:40
-//                   ),
-//                   Container(
-//                     decoration: BoxDecoration(
-//                         color: Colors.white,
-//                         borderRadius: BorderRadius.circular(30),
-//                         boxShadow: [
-//                           BoxShadow(
-//                               offset: Offset(0, 5),
-//                               color: Colors.deepOrange.withOpacity(.2),
-//                               spreadRadius: 2,
-//                               blurRadius: 10
-//                           )
-//                         ]
-//                     ),
-//                     child: TextFormField(
-//                       controller: nameController,
-//                       validator: (value) {
-//                         if(value!.length<5) {
-//                           return "username length must be 5";
-//                         } else {
-//                           return null;
-//                         }
-//                       },
-//                       decoration: InputDecoration(
-//                         labelText: 'username',
-//                         hintText: '  enter username',
-//                         prefixIcon: Icon(Icons.person),
-//                         border: OutlineInputBorder(
-//                           borderRadius: BorderRadius.circular(30.0),
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                   const SizedBox(
-//                       height: 20
-//                   ),
-//                   Container(
-//                     decoration: BoxDecoration(
-//                         color: Colors.white,
-//                         borderRadius: BorderRadius.circular(30),
-//                         boxShadow: [
-//                           BoxShadow(
-//                               offset: Offset(0, 5),
-//                               color: Colors.deepOrange.withOpacity(.2),
-//                               spreadRadius: 2,
-//                               blurRadius: 10
-//                           )
-//                         ]
-//                     ),
-//                     child: TextFormField(
-//                       controller: emailController,
-//                       validator: (value) {
-//                         if(value==null) {
-//                           return "enter email";
-//                         } else {
-//                           return null;
-//                         }
-//                       },
-//                       decoration:  InputDecoration(
-//                         labelText: 'email',
-//                         hintText: 'enter email',
-//                         prefixIcon: const Icon(Icons.email),
-//                         border: OutlineInputBorder(
-//                           borderRadius: BorderRadius.circular(30.0),
 //
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                   const SizedBox(
-//                       height: 20
-//                   ),
-//                   Container(
-//                     decoration: BoxDecoration(
-//                         color: Colors.white,
-//                         borderRadius: BorderRadius.circular(30),
-//                         boxShadow: [
-//                           BoxShadow(
-//                               offset: Offset(0, 5),
-//                               color: Colors.deepOrange.withOpacity(.2),
-//                               spreadRadius: 2,
-//                               blurRadius: 10
-//                           )
-//                         ]
-//                     ),
-//                     child: TextFormField(
-//                         controller: phoneController,
-//                         decoration:  InputDecoration(
-//                           labelText: 'Mobile Number',
-//                           hintText: 'Enter your mobile number',
-//                           prefixIcon: const Icon(Icons.phone),
-//                           border: OutlineInputBorder(
-//                               borderRadius: BorderRadius.circular(30.0)
-//                           ),
-//                         ),
-//                         keyboardType: TextInputType.phone,
-//                         validator: (value) {
-//                           if (value == null) {
-//                             return 'Please enter a mobile number';
-//                           } else if (value.length != 10) {
-//                             return "number must be 10 digit long";
-//                           }
-//                           return null;
-//                         }
-//                     ),
-//                   ),
-//                   const SizedBox(
-//                       height: 30
-//                   ),
-//                   Container(
-//                     decoration: BoxDecoration(
-//                         color: Colors.white,
-//                         borderRadius: BorderRadius.circular(30),
-//                         boxShadow: [
-//                           BoxShadow(
-//                               offset: Offset(0, 5),
-//                               color: Colors.deepOrange.withOpacity(.2),
-//                               spreadRadius: 2,
-//                               blurRadius: 10
-//                           )
-//                         ]
-//                     ),
-//                     child: TextFormField(
-//                         controller: addressController,
-//                         decoration:  InputDecoration(
-//                           labelText: 'saved address here',
-//                           hintText: 'Enter your Address',
-//                           prefixIcon: const Icon(Icons.location_city),
-//                           border: OutlineInputBorder(
-//                               borderRadius: BorderRadius.circular(30.0)
-//                           ),
-//                         ),
-//                         // keyboardType: TextInputType.phone,
-//                         validator: (value) {
-//                           if (value == null) {
-//                             return 'Please enter a mobile number';
-//                           } else if (value.length != 10) {
-//                             return "number must be 10 digit long";
-//                           }
-//                           return null;
-//                         }
-//                     ),
-//                   ),
-//                   SizedBox(height:40),
-//                   Container(
-//                     width: double.infinity,
-//                     child: ElevatedButton(
-//                       onPressed: () {
+//           // Padding(
+//           //   padding: const EdgeInsets.all(8.0),
+//           //   child: SelectWeekDays(
+//           //     width: MediaQuery.of(context).size.width / 2,
+//           //     fontSize: 14,
+//           //     fontWeight: FontWeight.w500,
+//           //     days: _days,
+//           //     border: false,
+//           //     boxDecoration: BoxDecoration(
+//           //       borderRadius: BorderRadius.circular(30.0),
+//           //       gradient: LinearGradient(
+//           //         begin: Alignment.topLeft,
+//           //         // 10% of the width, so there are ten blinds.
+//           //         colors: [
+//           //           const Color(0xFFE55CE4),
+//           //           const Color(0xFFBB75FB)
+//           //         ], // whitish to gray
+//           //         tileMode:
+//           //         TileMode.repeated, // repeats the gradient over the canvas
+//           //       ),
+//           //     ),
+//           //     onSelect: (values) {
+//           //       print(values);
+//           //     },
+//           //   ),
+//           // ),
 //
-//                       },
-//                       child: Text('Save Profile'),
-//                     ),
-//                   ),
-//                 ],
+//
+//           Padding(
+//             padding: const EdgeInsets.all(8.0),
+//             child: SelectWeekDays(
+//               fontSize: 14,
+//               fontWeight: FontWeight.w500,
+//               days: _days,
+//               boxDecoration: BoxDecoration(
+//                 borderRadius: BorderRadius.circular(30.0),
+//                 gradient: LinearGradient(
+//                   begin: Alignment.topLeft,
+//                   // 10% of the width, so there are ten blinds.
+//                   colors: [
+//                     const Color(0xFFE55CE4),
+//                     const Color(0xFFBB75FB)
+//                   ], // whitish to gray
+//                   tileMode:
+//                   TileMode.repeated, // repeats the gradient over the canvas
+//                 ),
 //               ),
+//               onSelect: (values) {
+//                 print(values);
+//               },
 //             ),
 //           ),
-//         )
+//
+//
+//           // SelectWeekDays(
+//           //   fontSize: 14,
+//           //   fontWeight: FontWeight.w500,
+//           //   days: _days,
+//           //   backgroundColor: Color(0xFF303030),
+//           //   onSelect: (values) {
+//           //     print(values);
+//           //   },
+//           // ),
+//
+//
+//           // Padding(
+//           //   padding: const EdgeInsets.all(8.0),
+//           //   child: SelectWeekDays(
+//           //     fontSize: 14,
+//           //     fontWeight: FontWeight.w500,
+//           //     days: _days,
+//           //     border: false,
+//           //     backgroundColor: Color(0xFF303030),
+//           //     onSelect: (values) {
+//           //       print(values);
+//           //     },
+//           //   ),
+//           // ),
+//
+//
+//           Row(
+//             children: [
+//               Padding(
+//                 padding: const EdgeInsets.all(8.0),
+//                 child: selectWeekDays,
+//               ),
+//               Container(
+//                 color: Colors.green.withOpacity(0.4),
+//                 child: TextButton(
+//                   onPressed: () {
+//                     List<DayInWeek> offAllDays =
+//                     List.from(_days.map((e) => e..isSelected = false));
+//                     customWidgetKey.currentState?.setDaysState(offAllDays);
+//                   },
+//                   child: Text('Days off'),
+//                 ),
+//               ),
+//             ],
+//           ),
+//
+//
+//
+//         ],
+//       ),
 //     );
 //   }
 // }

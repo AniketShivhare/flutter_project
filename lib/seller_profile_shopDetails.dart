@@ -1,7 +1,9 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_project/services/User_api.dart';
-
+import 'package:http/http.dart' as http;
 import 'apis/Seller.dart';
 
 class SellerProfileShopDetails extends StatefulWidget {
@@ -45,6 +47,43 @@ class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
 
   Future<void> postShopDetails() async {
 
+
+    Map<String, dynamic> json = {
+      "shopName": shopNameController,
+      "gstin":{
+        "gstinNo": GSTController,
+      },
+      "fssai":{
+        "licenseNumber": FSSAIController,
+      },
+      "landlineNumber":LandlineController,
+      "shopOpeningTime":shopOpenController,
+      "shopClosingTime":shopCloseController,
+      "address":{
+        "addressOfShop": shopAddressController,
+      },
+
+
+
+    };
+    final apiUrl = 'https://api/seller/:sellerid/product';
+
+    var uri = Uri.parse(apiUrl);
+    try {
+      final response = await http.post(
+        uri,
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(json),
+      );
+
+      if (response.statusCode == 201) {
+      } else {
+      }
+    } catch (e) {
+
+    }
   }
 
   @override

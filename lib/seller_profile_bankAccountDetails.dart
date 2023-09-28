@@ -1,7 +1,9 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_project/services/User_api.dart';
-
+import 'package:http/http.dart' as http;
 import 'apis/Seller.dart';
 
 class BankAccountDetails extends StatefulWidget {
@@ -38,6 +40,37 @@ class _BankAccountDetailsState extends State<BankAccountDetails> {
 
   Future<void> postBankDetails() async {
 
+    Map<String, dynamic> json = {
+      "bankDetails":{
+        "accountNo": Bank_Account_Controller,
+      },
+      "bankDetails":{
+        "ifscCode": Bank_IFSC_Controller,
+      },
+      "panCard":{
+        "panNo": Pan_Card_Controller,
+      },
+
+
+    };
+    final apiUrl = 'https://api/seller/:sellerid/product';
+
+    var uri = Uri.parse(apiUrl);
+    try {
+      final response = await http.post(
+        uri,
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(json),
+      );
+
+      if (response.statusCode == 201) {
+      } else {
+      }
+    } catch (e) {
+
+    }
   }
 
   @override
