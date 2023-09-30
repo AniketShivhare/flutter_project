@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 
 class LoginScreen extends StatefulWidget {
@@ -14,7 +17,40 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool isRememberMe = false;
 
-  Widget buildEmail() {
+  var phone_controller = TextEditingController();
+  var password_controller = TextEditingController();
+  late String token ;
+  Future<void> postSeller() async {
+     Map<String, dynamic> jsonData = {
+      "phone": phone_controller,
+      "OTP": password_controller,
+    };
+
+    var apiurl = "https://api.pehchankidukan.com/seller/login";
+    var uri = Uri.parse(apiurl);
+
+    try {
+      final response = await http.post(
+        uri,
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(jsonData),
+      );
+
+      if (response.statusCode == 201) {
+        Map<String, dynamic> responseData = json.decode(response.body);
+        token = responseData['token'];
+      } else {
+        print('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+
+  Widget buildPhone() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -42,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           height: 60,
           child: TextField(
+            controller: phone_controller,
             keyboardType: TextInputType.phone,
             style: TextStyle(
                 color: Colors.black87
@@ -92,6 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           height: 60,
           child: TextField(
+            controller: password_controller,
             obscureText: true,
             style: TextStyle(
                 color: Colors.black87
@@ -199,7 +237,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       SizedBox(height: 50,),
-                      buildEmail(),
+                      buildPhone(),
                       SizedBox(height: 20,),
                       buildPassword(),
                       buildForgotPassBtn(),
@@ -215,3 +253,5 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
+

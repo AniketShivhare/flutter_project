@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF08FFC8),),
         useMaterial3: true,
       ),
-      home: Regest(),
+      home: profileOptions(),
     );
   }
 }
