@@ -25,15 +25,15 @@ class _SellerRegistrationPageState extends State<Regest> {
 
 
 
-    final List<DayInWeek> _days = [
-    DayInWeek("Mon", dayKey: "monday"),
-    DayInWeek("Tue", dayKey: "tuesday"),
-    DayInWeek("Wed", dayKey: "wednesday"),
-    DayInWeek("Thu", dayKey: "thursday"),
-    DayInWeek("Fri", dayKey: "friday"),
-    DayInWeek("Sat", dayKey: "saturday"),
-    DayInWeek("Sun", dayKey: "sunday"),
-  ];
+  //   final List<DayInWeek> _days = [
+  //   DayInWeek("Mon", dayKey: "monday"),
+  //   DayInWeek("Tue", dayKey: "tuesday"),
+  //   DayInWeek("Wed", dayKey: "wednesday"),
+  //   DayInWeek("Thu", dayKey: "thursday"),
+  //   DayInWeek("Fri", dayKey: "friday"),
+  //   DayInWeek("Sat", dayKey: "saturday"),
+  //   DayInWeek("Sun", dayKey: "sunday"),
+  // ];
   //
   // bool isSelected;
   // ListView.builder(List<DayInWeek> _days, this.isSelected) :
@@ -84,23 +84,23 @@ class _SellerRegistrationPageState extends State<Regest> {
   @override
   Widget build(BuildContext context) {
 
-    final customWidgetKey = GlobalKey<SelectWeekDaysState>();
-
-    SelectWeekDays selectWeekDays = SelectWeekDays(
-      key: customWidgetKey,
-      fontSize: 10,
-      fontWeight: FontWeight.w500,
-      days: _days,
-      border: false,
-      width: MediaQuery.of(context).size.width / 1.4,
-      boxDecoration: BoxDecoration(
-        color: Colors.red,
-        borderRadius: BorderRadius.circular(30.0),
-      ),
-      onSelect: (values) {
-        print(values);
-      },
-    );
+    // final customWidgetKey = GlobalKey<SelectWeekDaysState>();
+    //
+    // SelectWeekDays selectWeekDays = SelectWeekDays(
+    //   key: customWidgetKey,
+    //   fontSize: 10,
+    //   fontWeight: FontWeight.w500,
+    //   days: _days,
+    //   border: false,
+    //   width: MediaQuery.of(context).size.width / 1.4,
+    //   boxDecoration: BoxDecoration(
+    //     color: Colors.red,
+    //     borderRadius: BorderRadius.circular(30.0),
+    //   ),
+    //   onSelect: (values) {
+    //     print(values);
+    //   },
+    // );
 
     return Scaffold(
       appBar: AppBar(
