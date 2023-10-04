@@ -74,186 +74,177 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF08FFC8),),
         useMaterial3: true,
       ),
-      home: profileOptions(),
+      home: Regest(),
     );
   }
 }
 
 
 
-//
-// import 'package:day_picker/day_picker.dart';
 // import 'package:flutter/material.dart';
 //
-// void main() {
-//   runApp(MyApp());
+// class MultiSelectChipField extends StatefulWidget {
+//   @override
+//   _MultiSelectChipFieldState createState() => _MultiSelectChipFieldState();
 // }
 //
-// class MyApp extends StatelessWidget {
+// class _MultiSelectChipFieldState extends State<MultiSelectChipField> {
+//   List<String> weekdays = [
+//     'Monday',
+//     'Tuesday',
+//     'Wednesday',
+//     'Thursday',
+//     'Friday',
+//     'Saturday',
+//     'Sunday'
+//   ];
+//   List<String> selectedWeekdays = [];
+//
+//   void _onChipSelected(String weekday) {
+//     setState(() {
+//       if (selectedWeekdays.contains(weekday)) {
+//         selectedWeekdays.remove(weekday);
+//       } else {
+//         selectedWeekdays.add(weekday);
+//       }
+//     });
+//   }
+//
 //   @override
 //   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: HomePage(),
+//     return Wrap(
+//       spacing: 8.0,
+//       runSpacing: 4.0,
+//       children: weekdays.map((weekday) {
+//         return ChoiceChip(
+//           label: Text(weekday),
+//           selected: selectedWeekdays.contains(weekday),
+//           onSelected: (_) => _onChipSelected(weekday),
+//         );
+//       }).toList(),
 //     );
 //   }
 // }
 //
-// class HomePage extends StatelessWidget {
-//   final List<DayInWeek> _days = [
-//     DayInWeek("Mon", dayKey: "monday"),
-//     DayInWeek("Tue", dayKey: "tuesday"),
-//     DayInWeek("Wed", dayKey: "wednesday"),
-//     DayInWeek("Thu", dayKey: "thursday"),
-//     DayInWeek("Fri", dayKey: "friday"),
-//     DayInWeek("Sat", dayKey: "saturday", isSelected: true),
-//     DayInWeek("Sun", dayKey: "sunday", isSelected: true),
-//   ];
+// class WeekdaySelectionScreen extends StatelessWidget {
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     final customWidgetKey = new GlobalKey<SelectWeekDaysState>();
-//
-//     SelectWeekDays selectWeekDays = SelectWeekDays(
-//       key: customWidgetKey,
-//       fontSize: 14,
-//       fontWeight: FontWeight.w500,
-//       days: _days,
-//       border: false,
-//       width: MediaQuery.of(context).size.width / 1.4,
-//       boxDecoration: BoxDecoration(
-//         color: Colors.red,
-//         borderRadius: BorderRadius.circular(30.0),
-//       ),
-//       onSelect: (values) {
-//         print(values);
-//       },
-//     );
-//
 //     return Scaffold(
 //       appBar: AppBar(
-//         title: Text("Select days in week"),
+//         title: Text('Select Weekdays'),
 //       ),
-//       body: Column(
-//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//         children: [
-//
-//           // Padding(
-//           //   padding: const EdgeInsets.all(8.0),
-//           //   child: SelectWeekDays(
-//           //     fontSize: 14,
-//           //     fontWeight: FontWeight.w500,
-//           //     days: _days,
-//           //     onSelect: (values) {
-//           //       print(values);
-//           //     },
-//           //   ),
-//           // ),
-//
-//
-//           // Padding(
-//           //   padding: const EdgeInsets.all(8.0),
-//           //   child: SelectWeekDays(
-//           //     width: MediaQuery.of(context).size.width / 2,
-//           //     fontSize: 14,
-//           //     fontWeight: FontWeight.w500,
-//           //     days: _days,
-//           //     border: false,
-//           //     boxDecoration: BoxDecoration(
-//           //       borderRadius: BorderRadius.circular(30.0),
-//           //       gradient: LinearGradient(
-//           //         begin: Alignment.topLeft,
-//           //         // 10% of the width, so there are ten blinds.
-//           //         colors: [
-//           //           const Color(0xFFE55CE4),
-//           //           const Color(0xFFBB75FB)
-//           //         ], // whitish to gray
-//           //         tileMode:
-//           //         TileMode.repeated, // repeats the gradient over the canvas
-//           //       ),
-//           //     ),
-//           //     onSelect: (values) {
-//           //       print(values);
-//           //     },
-//           //   ),
-//           // ),
-//
-//
-//           Padding(
-//             padding: const EdgeInsets.all(8.0),
-//             child: SelectWeekDays(
-//               fontSize: 14,
-//               fontWeight: FontWeight.w500,
-//               days: _days,
-//               boxDecoration: BoxDecoration(
-//                 borderRadius: BorderRadius.circular(30.0),
-//                 gradient: LinearGradient(
-//                   begin: Alignment.topLeft,
-//                   // 10% of the width, so there are ten blinds.
-//                   colors: [
-//                     const Color(0xFFE55CE4),
-//                     const Color(0xFFBB75FB)
-//                   ], // whitish to gray
-//                   tileMode:
-//                   TileMode.repeated, // repeats the gradient over the canvas
-//                 ),
-//               ),
-//               onSelect: (values) {
-//                 print(values);
-//               },
-//             ),
-//           ),
-//
-//
-//           // SelectWeekDays(
-//           //   fontSize: 14,
-//           //   fontWeight: FontWeight.w500,
-//           //   days: _days,
-//           //   backgroundColor: Color(0xFF303030),
-//           //   onSelect: (values) {
-//           //     print(values);
-//           //   },
-//           // ),
-//
-//
-//           // Padding(
-//           //   padding: const EdgeInsets.all(8.0),
-//           //   child: SelectWeekDays(
-//           //     fontSize: 14,
-//           //     fontWeight: FontWeight.w500,
-//           //     days: _days,
-//           //     border: false,
-//           //     backgroundColor: Color(0xFF303030),
-//           //     onSelect: (values) {
-//           //       print(values);
-//           //     },
-//           //   ),
-//           // ),
-//
-//
-//           Row(
-//             children: [
-//               Padding(
-//                 padding: const EdgeInsets.all(8.0),
-//                 child: selectWeekDays,
-//               ),
-//               Container(
-//                 color: Colors.green.withOpacity(0.4),
-//                 child: TextButton(
-//                   onPressed: () {
-//                     List<DayInWeek> offAllDays =
-//                     List.from(_days.map((e) => e..isSelected = false));
-//                     customWidgetKey.currentState?.setDaysState(offAllDays);
-//                   },
-//                   child: Text('Days off'),
-//                 ),
-//               ),
-//             ],
-//           ),
-//
-//
-//
-//         ],
+//       body: Padding(
+//         padding: const EdgeInsets.all(16.0),
+//         child: Column(
+//           children: [
+//             MultiSelectChipField(),
+//             SizedBox(height: 16.0),
+//             Text('Selected Weekdays: ${selectedWeekdays.join(', ')}'),
+//           ],
+//         ),
 //       ),
 //     );
 //   }
 // }
+//
+// void main() {
+//   runApp(MaterialApp(home: WeekdaySelectionScreen()));
+// }
+
+
+//
+// import 'package:flutter/material.dart';
+//
+// class MultiSelectChipField extends StatefulWidget {
+//   final Function(List<String>) onSelectionChanged;
+//
+//   MultiSelectChipField({
+//     required this.onSelectionChanged,
+//   });
+//
+//   @override
+//   _MultiSelectChipFieldState createState() => _MultiSelectChipFieldState();
+// }
+//
+// class _MultiSelectChipFieldState extends State<MultiSelectChipField> {
+//   List<String> weekdays = [
+//     'Monday',
+//     'Tuesday',
+//     'Wednesday',
+//     'Thursday',
+//     'Friday',
+//     'Saturday',
+//     'Sunday'
+//   ];
+//   List<String> selectedWeekdays = [];
+//
+//   void _onChipSelected(String weekday) {
+//     setState(() {
+//       if (selectedWeekdays.contains(weekday)) {
+//         selectedWeekdays.remove(weekday);
+//       } else {
+//         selectedWeekdays.add(weekday);
+//       }
+//       widget.onSelectionChanged(selectedWeekdays);
+//     });
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Wrap(
+//       spacing: 8.0,
+//       runSpacing: 4.0,
+//       children: weekdays.map((weekday) {
+//         return ChoiceChip(
+//           label: Text(weekday),
+//           selected: selectedWeekdays.contains(weekday),
+//           onSelected: (_) => _onChipSelected(weekday),
+//         );
+//       }).toList(),
+//     );
+//   }
+// }
+//
+// class WeekdaySelectionScreen extends StatefulWidget {
+//   @override
+//   _WeekdaySelectionScreenState createState() => _WeekdaySelectionScreenState();
+// }
+//
+// class _WeekdaySelectionScreenState extends State<WeekdaySelectionScreen> {
+//   List<String> selectedWeekdays = [];
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Select Weekdays'),
+//       ),
+//       body: Padding(
+//         padding: const EdgeInsets.all(16.0),
+//         child: Column(
+//           children: [
+//             MultiSelectChipField(
+//               onSelectionChanged: (selectedWeekdays) {
+//                 setState(() {
+//                   this.selectedWeekdays = selectedWeekdays;
+//                 });
+//               },
+//             ),
+//             SizedBox(height: 16.0),
+//             Text('Selected Weekdays: ${selectedWeekdays.join(', ')}'),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+//
+// void main() {
+//   runApp(MaterialApp(home: WeekdaySelectionScreen()));
+// }
+//
+
+
+
+
