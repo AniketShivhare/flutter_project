@@ -122,79 +122,82 @@ class _SellerRegistrationPageState extends State<Regest> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left:40.0),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 30,
-                      width: 30,
-                      // color: Colors.cyanAccent,
-                      decoration: BoxDecoration(
-                          color: Colors.cyanAccent,
-                          border: Border.all(
+              Container(
+                child: Padding(
+                  padding: EdgeInsets.only(left:40.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 30,
+                        width: 30,
+                        // color: Colors.cyanAccent,
+                        decoration: BoxDecoration(
                             color: Colors.cyanAccent,
-                            width: 2.0, // Adjust border width as needed
+                            border: Border.all(
+                              color: Colors.cyanAccent,
+                              width: 2.0, // Adjust border width as needed
+                            ),
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                        child: const Center(
+                          child: Text('1',
+                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
                           ),
-                          borderRadius: BorderRadius.circular(10)
-                      ),
-                      child: const Center(
-                        child: Text('1',
-                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
                         ),
                       ),
-                    ),
-                    Container(
-                      height: 1.0,
-                      width: 120,
-                      decoration:  BoxDecoration(
-                        color: customColor,
-                      ),
-                    ),
-                    Container(
-                      height: 30,
-                      width: 30,
-                      // color: Colors.cyanAccent,
-                      decoration: BoxDecoration(
+                      Container(
+                        height: 1.0,
+                        width: 120,
+                        decoration:  BoxDecoration(
                           color: customColor,
-                          border: Border.all(
-                            color: customColor,
-                            width: 2.0, // Adjust border width as needed
-                          ),
-                          borderRadius: BorderRadius.circular(10)
-                      ),
-                      child: const Center(
-                        child: Text('2',
-                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
                         ),
                       ),
-                    ),
-                    Container(
-                      height: 1.0,
-                      width: 120,
-                      decoration:  BoxDecoration(
-                        color: customColor,
+                      Container(
+                        height: 30,
+                        width: 30,
+                        // color: Colors.cyanAccent,
+                        decoration: BoxDecoration(
+                            color: customColor,
+                            border: Border.all(
+                              color: customColor,
+                              width: 2.0, // Adjust border width as needed
+                            ),
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                        child: const Center(
+                          child: Text('2',
+                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
+                          ),
+                        ),
                       ),
-                    ),
-                    Container(
-                      height: 30,
-                      width: 30,
-                      // color: Colors.cyanAccent,
-                      decoration: BoxDecoration(
+                      Container(
+                        height: 1.0,
+                        width: 120,
+                        decoration:  BoxDecoration(
                           color: customColor,
-                          border: Border.all(
-                            color: customColor,
-                            width: 2.0, // Adjust border width as needed
-                          ),
-                          borderRadius: BorderRadius.circular(10)
-                      ),
-                      child: const Center(
-                        child: Text('3',
-                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
                         ),
                       ),
-                    ),
-                  ],
+                      Container(
+                        height: 30,
+                        width: 30,
+                        // color: Colors.cyanAccent,
+                        decoration: BoxDecoration(
+                            color: customColor,
+                            border: Border.all(
+                              color: customColor,
+                              width: 2.0, // Adjust border width as needed
+                            ),
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                        child: const Center(
+                          child: Text('3',
+                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(
@@ -257,7 +260,7 @@ class _SellerRegistrationPageState extends State<Regest> {
                   hintText: ' Enter address',
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 32),
               ElevatedButton(onPressed: () async {
                 _getCurrentLocation().then((value) {
                   lat = '${value?.latitude}';
@@ -269,14 +272,12 @@ class _SellerRegistrationPageState extends State<Regest> {
                 });
               },
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.grey)
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.grey.shade300)
                 ),
                 child: const Text('Save my current location',
-                  style: TextStyle(
-                      color: Colors.black
-                  ),),
+                  ),
               ),
-              const SizedBox(height: 20),
+
 
               const SizedBox(height: 32),
 
@@ -291,6 +292,9 @@ class _SellerRegistrationPageState extends State<Regest> {
                         }
                         );
                   },
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.grey.shade300)
+                  ),
                 ),
               ),
 
@@ -300,7 +304,9 @@ class _SellerRegistrationPageState extends State<Regest> {
                 child: Center(
                   child: ElevatedButton(
                     style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all(const Size(double.infinity, 50))
+                        minimumSize: MaterialStateProperty.all(const Size(double.infinity, 50)),
+                        backgroundColor: MaterialStateProperty.all<Color>(Colors.grey.shade300)
+
                     ),
                     onPressed: postPersonalDetails,
                     child: const Text('Register'),
@@ -389,6 +395,7 @@ class _SimpleCustomAlertState extends State<SimpleCustomAlert> {
 
           SizedBox(height: 10,),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 20.0),
@@ -539,10 +546,12 @@ class _SimpleCustomAlertState extends State<SimpleCustomAlert> {
               ),
 
               Column(
+                // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(child: Text('Shop Timing',style: TextStyle(fontSize: 20),)),
                   SizedBox(height: 10,),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0),
@@ -673,7 +682,9 @@ class _SimpleCustomAlertState extends State<SimpleCustomAlert> {
                     ),
                   ),
 
-                  Column(children: uiElements),
+                  // Column(children: uiElements),
+
+
 
                   SizedBox(height: 20),
 

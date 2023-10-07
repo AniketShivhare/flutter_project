@@ -13,11 +13,11 @@ class profileOptions extends StatelessWidget {
         title: Center(child: Text('Profile Page',)),
         backgroundColor:  Color(0xFF08FFC8),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 38.0),
+      body: Container(
+        width: double.infinity,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+           // mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: 50,),
             Container(
@@ -79,7 +79,7 @@ class profileOptions extends StatelessWidget {
                     ),
                     Text("Shop Details", style:TextStyle(fontSize:18,color: Color(0xFF204969))),
                     SizedBox(
-                      width:73,
+                      width:70,
                     ),
                     Icon(
                       Icons.arrow_circle_right_sharp,
