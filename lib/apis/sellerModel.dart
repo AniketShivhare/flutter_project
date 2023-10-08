@@ -1,13 +1,19 @@
+import 'dart:core';
+
 class UpdateSeller {
   String ownerName;
   String phone;
-  String addressLine1;
-  String addressLine2;
+  String addressOfShop;
   String city;
   String state;
   String pincode;
   String location;
-  String shopTimings;
+  String shopName;
+  String shopOpeningTime;
+  String shopClosingTime;
+  String landlineNumber;
+  String fssaiLicenseNumber;
+  String gstNumber;
   String panNo;
   String panImage;
   String accountNo;
@@ -21,13 +27,17 @@ class UpdateSeller {
   UpdateSeller({
     this.ownerName = '',
     this.phone = '',
-    this.addressLine1 = '',
-    this.addressLine2 = '',
+    this.addressOfShop = '',
     this.city = '',
     this.state = '',
     this.pincode = '',
     this.location = '',
-    this.shopTimings = '',
+    this.shopName='',
+    this.shopOpeningTime = '',
+    this.shopClosingTime = '',
+    this.fssaiLicenseNumber = '',
+    this.gstNumber = '',
+    this.landlineNumber='',
     this.panNo = '',
     this.panImage = '',
     this.accountNo = '',
@@ -43,13 +53,16 @@ class UpdateSeller {
     Map<String, dynamic> json = {
       "ownerName": ownerName,
       "phone": phone,
-      "addressLine1": addressLine1,
-      "addressLine2": addressLine2,
+      "addressLine2": addressOfShop,
       "city": city,
       "state": state,
       "pincode": pincode,
       "location": location,
-      "shopTimings": shopTimings,
+      "shopName": shopName,
+      "shopOpeningTime": shopOpeningTime,
+      "shopClosingTime": shopClosingTime,
+      "fssaiLicenseNumber": fssaiLicenseNumber,
+      "gstNumber": gstNumber,
       "panNo": panNo,
       "panImage": panImage,
       "accountNo": accountNo,

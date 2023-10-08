@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project/registeration.dart';
 import 'package:flutter_project/services/User_api.dart';
 import 'package:http/http.dart' as http;
 import 'apis/Seller.dart';
@@ -95,10 +96,19 @@ class _BankAccountDetailsState extends State<BankAccountDetails> {
                   const SizedBox(
                       height:20
                   ),
-                  // const CircleAvatar(
-                  //   radius: 60,
-                  //   backgroundImage: AssetImage('assets/images/dark.jpg'),
-                  // ),
+                  Container(
+                    height: 140,
+
+                    child: Column(
+                      children: [
+                        const CircleAvatar(
+                          radius: 60,
+                          backgroundImage: AssetImage('assets/images/dark.jpg'),
+                        ),
+                        Text("Cancelled Cheque Image")
+                      ],
+                    ),
+                  ),
                   const SizedBox(
                       height:40
                   ),
@@ -210,6 +220,7 @@ class _BankAccountDetailsState extends State<BankAccountDetails> {
                   // const SizedBox(
                   //     height: 20
                   // ),
+
 
 
 

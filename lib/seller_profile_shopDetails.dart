@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project/registeration.dart';
 import 'package:flutter_project/services/User_api.dart';
 import 'package:http/http.dart' as http;
 import 'apis/Seller.dart';
@@ -38,8 +39,8 @@ class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
     GSTController.text = seller.gstin!.gstinNo!;
     FSSAIController.text = seller.fssai!.licenseNumber!;
     LandlineController.text = seller.landlineNumber!;
-    shopOpenController.text = seller.shopOpeningTime!;
-    shopCloseController.text = seller.shopClosingTime!;
+    shopOpenController.text = seller.shopOpeningTime! as String;
+    shopCloseController.text = seller.shopClosingTime! as String;
     shopAddressController.text= seller.address!.addressOfShop!;
 
 
@@ -392,6 +393,26 @@ class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
                     ),
                   ),
 
+
+
+                  const SizedBox(height: 22),
+
+                  Container(
+                    child: ElevatedButton(
+                      child: Text('Edit Shop Time'),
+                      onPressed: (){
+                        showDialog(context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context){
+                              return SimpleCustomAlert();
+                            }
+                        );
+                      },
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.grey.shade300)
+                      ),
+                    ),
+                  ),
 
                   SizedBox(height:40),
                   Container(

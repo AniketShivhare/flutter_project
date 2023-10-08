@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
@@ -6,6 +8,13 @@ import 'package:geolocator_apple/geolocator_apple.dart';
 import 'package:day_picker/day_picker.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
+
+import 'apis/sellerModel.dart';
+import 'bankDetails.dart';
+import 'dropdown.dart';
+import 'package:multiselect/multiselect.dart';
+
+bool food_present=false;
 
 
 class Regest extends StatefulWidget {
@@ -61,8 +70,7 @@ class _SellerRegistrationPageState extends State<Regest> {
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        // Permission is still denied, handle accordingly
+      if (permission == LocationPermission.denied) {// Permission is still denied, handle accordingly
         return null;
       }
     }
@@ -78,6 +86,18 @@ class _SellerRegistrationPageState extends State<Regest> {
     }
   }
   Future<void> postPersonalDetails() async {
+
+
+    UpdateSeller seller = UpdateSeller(
+      shopName: shopNameController.text,
+      ownerName: ownerNameController.text,
+      phone: mobileNoController.text,
+      landlineNumber: landlineNoController.text,
+      addressOfShop: addressController.text,
+    );
+    // print("seller shopname is printing wait.....");
+    // print(seller.shopName);
+    Navigator.push(context, MaterialPageRoute(builder: (context) => BankDetailsForm(seller:seller)));
 
   }
 
@@ -101,7 +121,20 @@ class _SellerRegistrationPageState extends State<Regest> {
     //     print(values);
     //   },
     // );
-
+    // Widget _buildWidgetBasedOnCondition(bool isFoodPresent) {
+    //   if (isFoodPresent) {
+    //     print(isFoodPresent);
+    //     setState(() {
+    //       // Update the UI based on the condition
+    //       // Call setState only if food is present
+    //     });
+    //     return foodInformation();
+    //   } else {
+    //     return Container();
+    //   }
+    // }
+    // bool isFood=false;
+    // var initialValue;
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80,
@@ -116,6 +149,7 @@ class _SellerRegistrationPageState extends State<Regest> {
 
         elevation: 20,
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -299,6 +333,25 @@ class _SellerRegistrationPageState extends State<Regest> {
               ),
 
               const SizedBox(height: 32),
+              dropDown(initialValue:food_present,
+              updateInitialValue: (value) {
+                setState(() {
+                  food_present = value;
+                });
+              }),
+              const SizedBox(height: 32),
+              dropDown2(),
+              const SizedBox(height: 32),
+              // if(food_present)
+              //   { foodInformation() };
+
+
+              food_present ? foodInformation() : Container(),
+
+
+              // foodInformation(),
+
+
               Container(
                 width: double.infinity,
                 child: Center(
@@ -327,9 +380,15 @@ class _SellerRegistrationPageState extends State<Regest> {
 
 var open_time_controller=TextEditingController();
 var close_time_controller=TextEditingController();
-var open_select_weekdays_controller1=TextEditingController();
+
+
+
+List<TextEditingController> other_open_time_controllers = [];
+List<TextEditingController> other_close_time_controllers = [];
+var index = 0;
 var other_open_time_controller=TextEditingController();
 var other_close_time_controller=TextEditingController();
+var open_select_weekdays_controller1=TextEditingController();
 // var tt="iii";
 
 class SimpleCustomAlert extends StatefulWidget{
@@ -387,129 +446,149 @@ class _SimpleCustomAlertState extends State<SimpleCustomAlert> {
   List<Widget> uiElements = [];
 
   void addNewUIElement() {
+    // index = index + 1;
+    // other_open_time_controllers.add(other_open_time_controller);
+    // other_close_time_controllers.add(other_open_time_controller);
     setState(() {
       // Add a new UI element to the list
-      uiElements.add(Column(
-        children: [
-          Container(child: Text('Shop Timing',style: TextStyle(fontSize: 20),)),
+      if(uiElements.length<1) {
+        //
+        //   var len = uiElements.length+1;
+        uiElements.add(Column(
+          children: [
+            Container(
+                child: Text('Shop Timing', style: TextStyle(fontSize: 20),)),
 
-          SizedBox(height: 10,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0),
-                child: Column(
-                  children: [
-                    Text("Open Timing"),
-                    Container(
-
-                      height: 40,
-                      width: 100,
-
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-
-                      ),
-                      child: TextFormField(
-
-                        readOnly: true,
-                        onTap: (){
-                          showDialog(context: context,
-                              barrierDismissible: false,
-                              builder: (BuildContext context){
-                                return otherOpenTimingPage();
-                              }
-                          );
-                        },
-                        textAlign: TextAlign.center,
-                        controller: other_open_time_controller,
-
-                        decoration: InputDecoration(
-                          contentPadding:EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                          // labelText: 'Open Time',
-                          hintText: '  Click',
-                          // prefixIcon: Icon(Icons.access_time_sharp),
-                          border: OutlineInputBorder(
-                            // borderRadius: BorderRadius.circular(10.0),
-                          ),
-
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              SizedBox(width: 40,),
-
-              Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: Column(
-                  children: [
-                    Text("Close Timing"),
-                    Container(
-                      // padding: EdgeInsets.only(right: 20),
-                      height: 40,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-
-                      ),
-                      child: TextFormField(
-                        readOnly: true,
-                        textAlign: TextAlign.center,
-                        onTap: (){
-                          showDialog(context: context,
-                              barrierDismissible: false,
-                              builder: (BuildContext context){
-                                return otherCloseTimingPage();
-                              }
-                          );
-                        },
-                        controller: other_close_time_controller,
-
-                        decoration: InputDecoration(
-                          contentPadding:EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                          // labelText: 'Close Time',
-                          hintText: '  Click',
-                          // prefixIcon: Icon(Icons.access_time_sharp),
-                          border: OutlineInputBorder(
-                            // borderRadius: BorderRadius.circular(10.0),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-
-          SizedBox(height: 10,),
-
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
+            SizedBox(height: 10,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Select Weekdays",style: TextStyle(fontSize: 20),),
-                SizedBox(height: 16.0),
-                MultiSelectChipField(
-                  onSelectionChanged: (otherSelectedWeekdays) {
-                    setState(() {
-                      this.otherSelectedWeekdays = otherSelectedWeekdays;
-                    });
-                  },
-                ),
-                SizedBox(height: 10.0),
-                Text('Selected Weekdays: ${otherSelectedWeekdays.join(', ')}'),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Column(
+                    children: [
+                      Text("Open Timing"),
+                      Container(
 
+                        height: 40,
+                        width: 100,
+
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+
+                        ),
+                        child: TextFormField(
+
+                          readOnly: true,
+                          onTap: () {
+                            showDialog(context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  // if(len==1)
+                                  //     return otherOpenTimingPage1();if(len==2)
+                                  //     return otherOpenTimingPage2();if(len==3)
+                                  //     return otherOpenTimingPage3();if(len==4)
+                                  //     return otherOpenTimingPage4();if(len==5)
+                                  //     return otherOpenTimingPage5();if(len==6)
+                                  //     return otherOpenTimingPage6();
+                                  return otherOpenTimingPage();
+                                }
+                            );
+                          },
+                          textAlign: TextAlign.center,
+
+                          controller: other_open_time_controller,
+
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 10.0),
+                            // labelText: 'Open Time',
+                            hintText: '  Click',
+                            // prefixIcon: Icon(Icons.access_time_sharp),
+                            border: OutlineInputBorder(
+                              // borderRadius: BorderRadius.circular(10.0),
+                            ),
+
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(width: 40,),
+
+                Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: Column(
+                    children: [
+                      Text("Close Timing"),
+                      Container(
+                        // padding: EdgeInsets.only(right: 20),
+                        height: 40,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+
+                        ),
+                        child: TextFormField(
+                          readOnly: true,
+                          textAlign: TextAlign.center,
+                          onTap: () {
+                            showDialog(context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return otherCloseTimingPage();
+                                }
+                            );
+                          },
+                          controller: other_close_time_controller,
+
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 10.0),
+                            // labelText: 'Close Time',
+                            hintText: '  Click',
+                            // prefixIcon: Icon(Icons.access_time_sharp),
+                            border: OutlineInputBorder(
+                              // borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
-          ),
-        ],
-      ),);
+
+            SizedBox(height: 10,),
+
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Text("Select Weekdays", style: TextStyle(fontSize: 20),),
+                  SizedBox(height: 16.0),
+                  otherDaysSelectChipField(
+                    onSelectionChanged: (otherSelectedWeekdays) {
+                      setState(() {
+                        this.otherSelectedWeekdays = otherSelectedWeekdays;
+                      });
+                    },
+                  ),
+                  SizedBox(height: 10.0),
+                  Text(
+                      'Selected Weekdays: ${otherSelectedWeekdays.join(', ')}'),
+
+                ],
+              ),
+            ),
+          ],
+        ),);
+      }
     });
+
   }
 
   @override
@@ -682,7 +761,7 @@ class _SimpleCustomAlertState extends State<SimpleCustomAlert> {
                     ),
                   ),
 
-                  // Column(children: uiElements),
+                   Column(children: uiElements),
 
 
 
@@ -1791,7 +1870,8 @@ class _otherCloseTimingPageState extends State<otherCloseTimingPage> {
                 child: ElevatedButton(
 
                     onPressed: () => {
-                      other_close_time_controller.text =("${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, "0")} ${timeFormat}"),
+                      other_close_time_controller.text = ("${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, "0")} ${timeFormat}"),
+                      // other_close_time_controllers[index],
                       Navigator.pop(context)
                     },
                     child: Text('Ok',style: TextStyle(fontSize: 20))),
@@ -1807,6 +1887,413 @@ class _otherCloseTimingPageState extends State<otherCloseTimingPage> {
     );
   }
 }
+
+
+
+
+//
+// class otherOpenTimingPage1 extends StatefulWidget {
+//   const otherOpenTimingPage1({super.key});
+//
+//   @override
+//   State<otherOpenTimingPage1> createState() => _otherOpenTimingPage1State();
+// }
+
+// class _otherOpenTimingPage1State extends State<otherOpenTimingPage1> {
+//   var hour = 0;
+//   var minute = 0;
+//   var timeFormat = "AM";
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Dialog(
+//       child: Padding(
+//         padding: const EdgeInsets.symmetric(horizontal: 0),
+//         child: Container(
+//           height: 300,
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               Text(
+//                   "Pick Your Time! ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, "0")} ${timeFormat}",
+//                   style:
+//                   const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+//               const SizedBox(
+//                 height: 20,
+//               ),
+//               Container(
+//                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+//                 decoration: BoxDecoration(
+//                     color: Colors.black87,
+//                     borderRadius: BorderRadius.circular(10)),
+//                 child: Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                   children: [
+//                     NumberPicker(
+//                       minValue: 0,
+//                       maxValue: 12,
+//                       value: hour,
+//                       zeroPad: true,
+//                       infiniteLoop: true,
+//                       itemWidth: 80,
+//                       itemHeight: 60,
+//                       onChanged: (value) {
+//                         setState(() {
+//                           hour = value;
+//                         });
+//                       },
+//                       textStyle:
+//                       const TextStyle(color: Colors.grey, fontSize: 20),
+//                       selectedTextStyle:
+//                       const TextStyle(color: Colors.white, fontSize: 30),
+//                       decoration: const BoxDecoration(
+//                         border: Border(
+//                             top: BorderSide(
+//                               color: Colors.white,
+//                             ),
+//                             bottom: BorderSide(color: Colors.white)),
+//                       ),
+//                     ),
+//                     NumberPicker(
+//                       minValue: 0,
+//                       maxValue: 59,
+//                       value: minute,
+//                       zeroPad: true,
+//                       infiniteLoop: true,
+//                       itemWidth: 80,
+//                       itemHeight: 60,
+//                       onChanged: (value) {
+//                         setState(() {
+//                           minute = value;
+//                         });
+//                       },
+//                       textStyle:
+//                       const TextStyle(color: Colors.grey, fontSize: 20),
+//                       selectedTextStyle:
+//                       const TextStyle(color: Colors.white, fontSize: 30),
+//                       decoration: const BoxDecoration(
+//                         border: Border(
+//                             top: BorderSide(
+//                               color: Colors.white,
+//                             ),
+//                             bottom: BorderSide(color: Colors.white)),
+//                       ),
+//                     ),
+//                     Column(
+//                       children: [
+//                         GestureDetector(
+//                           onTap: () {
+//                             setState(() {
+//                               timeFormat = "AM";
+//                             });
+//                           },
+//                           child: Container(
+//                             padding: const EdgeInsets.symmetric(
+//                                 horizontal: 20, vertical: 10),
+//                             decoration: BoxDecoration(
+//                                 color: timeFormat == "AM"
+//                                     ? Colors.grey.shade800
+//                                     : Colors.grey.shade700,
+//                                 border: Border.all(
+//                                   color: timeFormat == "AM"
+//                                       ? Colors.grey
+//                                       : Colors.grey.shade700,
+//                                 )),
+//                             child: const Text(
+//                               "AM",
+//                               style: TextStyle(color: Colors.white, fontSize: 25),
+//                             ),
+//                           ),
+//                         ),
+//                         const SizedBox(
+//                           height: 15,
+//                         ),
+//                         GestureDetector(
+//                           onTap: () {
+//                             setState(() {
+//                               timeFormat = "PM";
+//                             });
+//                           },
+//                           child: Container(
+//                             padding: const EdgeInsets.symmetric(
+//                                 horizontal: 20, vertical: 10),
+//                             decoration: BoxDecoration(
+//                               color: timeFormat == "PM"
+//                                   ? Colors.grey.shade800
+//                                   : Colors.grey.shade700,
+//                               border: Border.all(
+//                                 color: timeFormat == "PM"
+//                                     ? Colors.grey
+//                                     : Colors.grey.shade700,
+//                               ),
+//                             ),
+//                             child: const Text(
+//                               "PM",
+//                               style: TextStyle(color: Colors.white, fontSize: 25),
+//                             ),
+//                           ),
+//                         )
+//                       ],
+//                     )
+//                   ],
+//                 ),
+//               ),
+//
+//               SizedBox(height: 5,),
+//               Container(
+//                 height: 40,
+//                 decoration: BoxDecoration(
+//                   borderRadius: BorderRadius.circular(20.0),
+//                   border: Border.all(color: Colors.black, width: 1.0),
+//                 ),
+//                 child: ElevatedButton(
+//
+//                     onPressed: () => {
+//                       other_open_time1_controller.text =("${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, "0")} ${timeFormat}"),
+//                       Navigator.pop(context)
+//                     },
+//                     child: Text('Ok',style: TextStyle(fontSize: 20))),
+//               ),
+//             ],
+//
+//
+//           ),
+//
+//
+//         ),
+//       ),
+//     );
+//   }
+// }
+//
+// class otherCloseTimingPage1 extends StatefulWidget {
+//   const otherCloseTimingPage({super.key});
+//
+//   @override
+//   State<otherCloseTimingPage> createState() => _otherCloseTimingPageState();
+// }
+//
+// class _otherCloseTimingPageState extends State<otherCloseTimingPage> {
+//   var hour = 0;
+//   var minute = 0;
+//   var timeFormat = "AM";
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Dialog(
+//       child: Padding(
+//         padding: const EdgeInsets.symmetric(horizontal: 0),
+//         child: Container(
+//           height: 300,
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               Text(
+//                   "Pick Your Time! ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, "0")} ${timeFormat}",
+//                   style:
+//                   const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+//               const SizedBox(
+//                 height: 20,
+//               ),
+//               Container(
+//                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+//                 decoration: BoxDecoration(
+//                     color: Colors.black87,
+//                     borderRadius: BorderRadius.circular(10)),
+//                 child: Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                   children: [
+//                     NumberPicker(
+//                       minValue: 0,
+//                       maxValue: 12,
+//                       value: hour,
+//                       zeroPad: true,
+//                       infiniteLoop: true,
+//                       itemWidth: 80,
+//                       itemHeight: 60,
+//                       onChanged: (value) {
+//                         setState(() {
+//                           hour = value;
+//                         });
+//                       },
+//                       textStyle:
+//                       const TextStyle(color: Colors.grey, fontSize: 20),
+//                       selectedTextStyle:
+//                       const TextStyle(color: Colors.white, fontSize: 30),
+//                       decoration: const BoxDecoration(
+//                         border: Border(
+//                             top: BorderSide(
+//                               color: Colors.white,
+//                             ),
+//                             bottom: BorderSide(color: Colors.white)),
+//                       ),
+//                     ),
+//                     NumberPicker(
+//                       minValue: 0,
+//                       maxValue: 59,
+//                       value: minute,
+//                       zeroPad: true,
+//                       infiniteLoop: true,
+//                       itemWidth: 80,
+//                       itemHeight: 60,
+//                       onChanged: (value) {
+//                         setState(() {
+//                           minute = value;
+//                         });
+//                       },
+//                       textStyle:
+//                       const TextStyle(color: Colors.grey, fontSize: 20),
+//                       selectedTextStyle:
+//                       const TextStyle(color: Colors.white, fontSize: 30),
+//                       decoration: const BoxDecoration(
+//                         border: Border(
+//                             top: BorderSide(
+//                               color: Colors.white,
+//                             ),
+//                             bottom: BorderSide(color: Colors.white)),
+//                       ),
+//                     ),
+//                     Column(
+//                       children: [
+//                         GestureDetector(
+//                           onTap: () {
+//                             setState(() {
+//                               timeFormat = "AM";
+//                             });
+//                           },
+//                           child: Container(
+//                             padding: const EdgeInsets.symmetric(
+//                                 horizontal: 20, vertical: 10),
+//                             decoration: BoxDecoration(
+//                                 color: timeFormat == "AM"
+//                                     ? Colors.grey.shade800
+//                                     : Colors.grey.shade700,
+//                                 border: Border.all(
+//                                   color: timeFormat == "AM"
+//                                       ? Colors.grey
+//                                       : Colors.grey.shade700,
+//                                 )),
+//                             child: const Text(
+//                               "AM",
+//                               style: TextStyle(color: Colors.white, fontSize: 25),
+//                             ),
+//                           ),
+//                         ),
+//                         const SizedBox(
+//                           height: 15,
+//                         ),
+//                         GestureDetector(
+//                           onTap: () {
+//                             setState(() {
+//                               timeFormat = "PM";
+//                             });
+//                           },
+//                           child: Container(
+//                             padding: const EdgeInsets.symmetric(
+//                                 horizontal: 20, vertical: 10),
+//                             decoration: BoxDecoration(
+//                               color: timeFormat == "PM"
+//                                   ? Colors.grey.shade800
+//                                   : Colors.grey.shade700,
+//                               border: Border.all(
+//                                 color: timeFormat == "PM"
+//                                     ? Colors.grey
+//                                     : Colors.grey.shade700,
+//                               ),
+//                             ),
+//                             child: const Text(
+//                               "PM",
+//                               style: TextStyle(color: Colors.white, fontSize: 25),
+//                             ),
+//                           ),
+//                         )
+//                       ],
+//                     )
+//                   ],
+//                 ),
+//               ),
+//
+//               SizedBox(height: 5,),
+//               Container(
+//                 height: 40,
+//                 decoration: BoxDecoration(
+//                   borderRadius: BorderRadius.circular(20.0),
+//                   border: Border.all(color: Colors.black, width: 1.0),
+//                 ),
+//                 child: ElevatedButton(
+//
+//                     onPressed: () => {
+//                       other_close_time_controller.text =("${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, "0")} ${timeFormat}"),
+//                       Navigator.pop(context)
+//                     },
+//                     child: Text('Ok',style: TextStyle(fontSize: 20))),
+//               ),
+//             ],
+//
+//
+//           ),
+//
+//
+//         ),
+//       ),
+//     );
+//   }
+// }
+//
+// class otherDaysSelectChipField extends StatefulWidget {
+//   final Function(List<String>) onSelectionChanged;
+//
+//   otherDaysSelectChipField({
+//     required this.onSelectionChanged,
+//   });
+//
+//   @override
+//   _otherDaysSelectChipFieldState createState() => _otherDaysSelectChipFieldState();
+// }
+//
+// class _otherDaysSelectChipFieldState extends State<otherDaysSelectChipField> {
+//   List<String> weekdays = [
+//     'Mon',
+//     'Tue',
+//     'Wed',
+//     'Thu',
+//     'Fri',
+//     'Sat',
+//     'Sun'
+//   ];
+//   List<String> otherSelectedWeekdays = [];
+//
+//   void _onChipSelected(String weekday) {
+//     setState(() {
+//       if (otherSelectedWeekdays.contains(weekday)) {
+//         otherSelectedWeekdays.remove(weekday);
+//       } else {
+//         otherSelectedWeekdays.add(weekday);
+//       }
+//       // tt = selectedWeekdays.join(', ');
+//       widget.onSelectionChanged(otherSelectedWeekdays);
+//     });
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Wrap(
+//       spacing: 8.0,
+//       runSpacing: 4.0,
+//       children: weekdays.map((weekday) {
+//         return ChoiceChip(
+//           label: Text(weekday),
+//           selected: otherSelectedWeekdays.contains(weekday),
+//           onSelected: (_) => _onChipSelected(weekday),
+//         );
+//       }).toList(),
+//     );
+//   }
+//
+// }
+
+
+
 
 
 

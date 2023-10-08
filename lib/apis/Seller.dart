@@ -9,8 +9,8 @@ class Seller {
   FSSAI? fssai;
   String? photo;
   Address? address;
-  String? shopOpeningTime;
-  String? shopClosingTime;
+  DateTime? shopOpeningTime;
+  DateTime? shopClosingTime;
 
   PanCard? panCard;
   BankDetails? bankDetails;
@@ -52,8 +52,8 @@ class Seller {
       fssai: FSSAI.fromJson(json['fssai']),
       photo: json['photo'],
       address: Address.fromJson(json['address']),
-      shopOpeningTime: (json['shopOpeningTime']),
-      shopClosingTime: (json['shopClosingTime']),
+      shopOpeningTime: DateTime.parse(json['shopOpeningTime']),
+      shopClosingTime: DateTime.parse(json['shopClosingTime']),
       panCard: PanCard.fromJson(json['panCard']),
       bankDetails: BankDetails.fromJson(json['bankDetails']),
       marginCharged: json['marginCharged'].toDouble(),
