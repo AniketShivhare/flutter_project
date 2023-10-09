@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_holo_date_picker/date_picker.dart';
+import 'package:flutter_holo_date_picker/i18n/date_picker_i18n.dart';
 import 'package:flutter_project/uploadImages.dart';
 
 import 'apis/sellerModel.dart';
+import 'date_selector.dart';
+import 'package:intl/intl.dart';
+
 
 void main() {
   runApp(BankDetailsApp());
@@ -50,17 +55,17 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
         MaterialPageRoute(builder: (context) => UploadImages(seller: seller)));
   }
 
-
-  Future<void> _selectDate(BuildContext context) async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null && picked != DateTime.now())
-      print('Selected date: $picked');
-  }
+  DateTime selectedDate = DateTime(2020);
+  // Future<void> _selectDate(BuildContext context) async {
+  //   DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(2000),
+  //     lastDate: DateTime(2101),
+  //   );
+  //   if (picked != null && picked != DateTime.now())
+  //     print('Selected date: $picked');
+  // }
 
   Color customColor = const Color(0xFFDEDC07);
 
@@ -209,26 +214,72 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
                 ),
               ),
 
+              SizedBox(height: 30),
 
-              // TextFormField(
-              //   controller: fssaiExpiryController,
-              //   decoration: const InputDecoration(
-              //     labelText: 'FSSAI License Expiry Date',
-              //     hintText: 'Enter FSSAI license Expiry Date',
+
+              TextFormField(
+                controller: fssaiExpiryController,
+                decoration: const InputDecoration(
+                  labelText: 'FSSAI License Expiry Date',
+                  hintText: 'Enter FSSAI license Expiry Date',
+                ),
+
+                onTap: () async {
+              var datePicked = await DatePicker.showSimpleDatePicker(
+              context,
+              initialDate: selectedDate,
+              firstDate: DateTime(2020),
+              lastDate: DateTime(2090),
+              dateFormat: "dd-MMMM-yyyy",
+              locale: DateTimePickerLocale.en_us,
+              looping: true,
+              );
+
+              if (datePicked != null && datePicked != selectedDate) {
+                setState(() {
+                  selectedDate = datePicked;
+                });
+              }
+
+
+              String input = DateFormat('dd-MMM-yyyy').format(datePicked!);
+
+
+
+              fssaiExpiryController.text = (input);
+              final snackBar =
+              SnackBar(content: Text("Date Picked $datePicked"));
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              },
+
+              ),
+
+              // ElevatedButton(onPressed: () { date_picker();},
+              //   child: Text(
+              //     'FSSAI License Expiry Date',
+              //     style: TextStyle(color: Colors.blue, fontSize: 20.0),
               //   ),
-              //   onTap: ()=> _selectDate(context),
-              //      Text(
-              //       'Select Date',
-              //       style: TextStyle(color: Colors.blue, fontSize: 20.0),
-              //     ),
               // ),
 
-              ElevatedButton(onPressed: () => _selectDate(context),
-                child: Text(
-                  'FSSAI License Expiry Date',
-                  style: TextStyle(color: Colors.blue, fontSize: 20.0),
-                ),
-              ),
+              // ElevatedButton(
+              //   child: Text("open picker dialog"),
+              //   onPressed: () async {
+              //     var datePicked = await DatePicker.showSimpleDatePicker(
+              //       context,
+              //       initialDate: DateTime(2020),
+              //       firstDate: DateTime(2020),
+              //       lastDate: DateTime(2090),
+              //       dateFormat: "dd-MMMM-yyyy",
+              //       locale: DateTimePickerLocale.en_us,
+              //       looping: true,
+              //     );
+              //
+              //     final snackBar =
+              //     SnackBar(content: Text("Date Picked $datePicked"));
+              //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              //   },
+              // ),
+
               SizedBox(height: 30,),
               const Text(
                   'Shop Act License Number', style: TextStyle(fontSize: 18)),
@@ -241,12 +292,47 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
               ),
 
 
+              // TextFormField(
+              //   controller: shopActExpiryController,
+              //   decoration: const InputDecoration(
+              //     labelText: 'Shop Act License Expiry Date',
+              //     hintText: 'Enter Shop Act license Expiry Date',
+              //   ),
+              // ),
               TextFormField(
                 controller: shopActExpiryController,
                 decoration: const InputDecoration(
                   labelText: 'Shop Act License Expiry Date',
                   hintText: 'Enter Shop Act license Expiry Date',
                 ),
+                onTap: () async {
+                  var datePicked = await DatePicker.showSimpleDatePicker(
+                    context,
+                    initialDate: selectedDate,
+                    firstDate: DateTime(2020),
+                    lastDate: DateTime(2090),
+                    dateFormat: "dd-MMMM-yyyy",
+                    locale: DateTimePickerLocale.en_us,
+                    looping: true,
+                  );
+
+                  if (datePicked != null && datePicked != selectedDate) {
+                    setState(() {
+                      selectedDate = datePicked;
+                    });
+                  }
+
+
+                  String input1 = DateFormat('dd-MMM-yyyy').format(datePicked!);
+
+
+
+                  shopActExpiryController.text = (input1);
+                  final snackBar =
+                  SnackBar(content: Text("Date Picked $datePicked"));
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                },
+
               ),
               SizedBox(height: 30,),
               Center(

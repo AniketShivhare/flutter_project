@@ -47,6 +47,8 @@ dependencies:
   numberpicker: ^2.1.2
   multi_select_flutter: ^4.1.3
   multiselect: ^0.0.7
+  flutter_holo_date_picker: ^1.1.2+1
+  intl: ^0.18.0
 
 
 dev_dependencies:
