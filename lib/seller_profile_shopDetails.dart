@@ -6,6 +6,7 @@ import 'package:flutter_project/registeration.dart';
 import 'package:flutter_project/services/User_api.dart';
 import 'package:http/http.dart' as http;
 import 'apis/Seller.dart';
+import 'dialog_of_registration.dart';
 
 class SellerProfileShopDetails extends StatefulWidget {
   const SellerProfileShopDetails({super.key});
