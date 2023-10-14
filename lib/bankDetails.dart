@@ -235,7 +235,6 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
               dateFormat: "dd-MMMM-yyyy",
               locale: DateTimePickerLocale.en_us,
               looping: true,
-                barrierDismissible: false,
 
               );
 
