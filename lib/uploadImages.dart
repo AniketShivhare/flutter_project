@@ -76,7 +76,7 @@ class _BankDetailsFormState extends State<UploadImages> {
                     ),
                     Container(
                       height: 1.0,
-                      width: 120,
+                      width: 90,
                       decoration: const BoxDecoration(
                           color: Colors.cyanAccent
                       ),
@@ -101,7 +101,7 @@ class _BankDetailsFormState extends State<UploadImages> {
                     ),
                     Container(
                       height: 1.0,
-                      width: 120,
+                      width: 90,
                       decoration: const BoxDecoration(
                           color: Colors.cyanAccent
                       ),

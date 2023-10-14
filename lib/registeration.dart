@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geolocator_android/geolocator_android.dart';
 import 'package:geolocator_apple/geolocator_apple.dart';
@@ -9,10 +9,12 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import 'apis/sellerModel.dart';
 import 'bankDetails.dart';
+import 'current_location_screen.dart';
 import 'dropdown.dart';
 import 'package:multiselect/multiselect.dart';
 import 'package:flutter_project/shopTime_weekDays_class.dart';
 import 'package:flutter_project/dialog_of_registration.dart';
+import 'package:flutter_project/current_location_screen.dart';
 
 bool food_present=false;
 
@@ -38,6 +40,8 @@ class _SellerRegistrationPageState extends State<Regest> {
   Color customColor =  const Color(0xFFDEDC07);
 
   // static get isSelected => null;
+
+  // CurrentLocationScreen currentLocationScreen = CurrentLocationScreen();
 
 
   Future<Position?> _getCurrentLocation() async {
@@ -83,9 +87,12 @@ class _SellerRegistrationPageState extends State<Regest> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => BankDetailsForm(seller:seller)));
 
   }
+  bool dia = false;
 
   @override
   Widget build(BuildContext context) {
+
+
 
     return Scaffold(
       appBar: AppBar(
@@ -109,81 +116,78 @@ class _SellerRegistrationPageState extends State<Regest> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                child: Padding(
-                  padding: EdgeInsets.only(left:40.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 30,
-                        width: 30,
-                        // color: Colors.cyanAccent,
-                        decoration: BoxDecoration(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 30,
+                      width: 30,
+                      // color: Colors.cyanAccent,
+                      decoration: BoxDecoration(
+                          color: Colors.cyanAccent,
+                          border: Border.all(
                             color: Colors.cyanAccent,
-                            border: Border.all(
-                              color: Colors.cyanAccent,
-                              width: 2.0, // Adjust border width as needed
-                            ),
-                            borderRadius: BorderRadius.circular(10)
-                        ),
-                        child: const Center(
-                          child: Text('1',
-                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
+                            width: 2.0, // Adjust border width as needed
                           ),
+                          borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: const Center(
+                        child: Text('1',
+                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
                         ),
                       ),
-                      Container(
-                        height: 1.0,
-                        width: 120,
-                        decoration:  BoxDecoration(
+                    ),
+                    Container(
+                      height: 1.0,
+                      width: 90,
+                      decoration:  BoxDecoration(
+                        color: customColor,
+                      ),
+                    ),
+                    Container(
+                      height: 30,
+                      width: 30,
+                      // color: Colors.cyanAccent,
+                      decoration: BoxDecoration(
                           color: customColor,
-                        ),
-                      ),
-                      Container(
-                        height: 30,
-                        width: 30,
-                        // color: Colors.cyanAccent,
-                        decoration: BoxDecoration(
+                          border: Border.all(
                             color: customColor,
-                            border: Border.all(
-                              color: customColor,
-                              width: 2.0, // Adjust border width as needed
-                            ),
-                            borderRadius: BorderRadius.circular(10)
-                        ),
-                        child: const Center(
-                          child: Text('2',
-                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
+                            width: 2.0, // Adjust border width as needed
                           ),
+                          borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: const Center(
+                        child: Text('2',
+                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
                         ),
                       ),
-                      Container(
-                        height: 1.0,
-                        width: 120,
-                        decoration:  BoxDecoration(
+                    ),
+                    Container(
+                      height: 1.0,
+                      width: 90,
+                      decoration:  BoxDecoration(
+                        color: customColor,
+                      ),
+                    ),
+                    Container(
+                      height: 30,
+                      width: 30,
+                      // color: Colors.cyanAccent,
+                      decoration: BoxDecoration(
                           color: customColor,
-                        ),
-                      ),
-                      Container(
-                        height: 30,
-                        width: 30,
-                        // color: Colors.cyanAccent,
-                        decoration: BoxDecoration(
+                          border: Border.all(
                             color: customColor,
-                            border: Border.all(
-                              color: customColor,
-                              width: 2.0, // Adjust border width as needed
-                            ),
-                            borderRadius: BorderRadius.circular(10)
-                        ),
-                        child: const Center(
-                          child: Text('3',
-                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
+                            width: 2.0, // Adjust border width as needed
                           ),
+                          borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: const Center(
+                        child: Text('3',
+                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(
@@ -265,8 +269,87 @@ class _SellerRegistrationPageState extends State<Regest> {
               ),
 
 
-              const SizedBox(height: 32),
+             const SizedBox(height: 32),
+              //
+              // Container(
+              //   child: ElevatedButton(
+              //     child: Text('current location'),
+              //     onPressed: ()=> CurrentLocationScreen(),
+              //     style: ButtonStyle(
+              //         backgroundColor: MaterialStateProperty.all<Color>(Colors.grey.shade300)
+              //     ),
+              //   ),
+              // ),
 
+              ElevatedButton(onPressed: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
+                  return const CurrentLocationScreen();
+                }));
+              }, child: const Text("User current location")),
+
+
+              //
+              // const SizedBox(height: 32),
+              // ElevatedButton(
+              //   onPressed: () async {
+              //     try {
+              //       await CurrentLocationScreen().;
+              //     } catch (e) {
+              //       print('Error: $e');
+              //       CurrentLocationScreen._showLocationServiceDisabledDialog(context);
+              //     }
+              //   },
+              //   style: ElevatedButton.styleFrom(
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(20.0),
+              //     ),
+              //   ),
+              //   child: Row(
+              //     mainAxisSize: MainAxisSize.min,
+              //     children: [
+              //       const Icon(Icons.location_history),
+              //       const SizedBox(width: 8.0),
+              //       const Text("Current Location"),
+              //     ],
+              //   ),
+              // ),
+
+
+
+        ElevatedButton(
+          onPressed: () async {
+            // Request location permission
+
+           _showLocationServiceDisabledDialog(context);
+
+            // LocationPermission permission =  await _showLocationServiceDisabledDialog(context);
+            // LocationPermission permission = await _requestLocationPermission();
+
+
+            // if (permission == LocationPermission.always ||
+            //     permission == LocationPermission.whileInUse)
+              if(dia == true)
+            {
+              // If permission granted, navigate to the map screen
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => CurrentLocationScreen()),
+              );
+            } else {
+              // Handle case when permission is not granted
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text('Location permission denied.'),
+                ),
+              );
+            }
+          },
+          child: const Text('Request Location Permission'),
+        ),
+
+
+
+              const SizedBox(height: 32),
               Container(
                 child: ElevatedButton(
                   child: Text('Shop Time'),
@@ -328,7 +411,60 @@ class _SellerRegistrationPageState extends State<Regest> {
 
 
   }
+
+
+  Future<LocationPermission> _requestLocationPermission() async {
+    LocationPermission permission = await Geolocator.requestPermission();
+    return permission;
+  }
+
+  void _showLocationServiceDisabledDialog(BuildContext context) async {
+    // ... (existing code)
+    showDialog(
+      context: context,
+      builder: (context) =>
+          AlertDialog(
+            title: const Text('Location Services Disabled'),
+            content: const Text(
+                'Please enable location services to use this feature.'),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+                child: const Text('Cancel'),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  // Open location settings to allow the user to enable location services
+                  bool isOpened = await Geolocator.openLocationSettings();
+                  dia = true;
+                  if (isOpened) {
+                    Navigator.of(context).pop(); // Close the dialog
+                  } else {
+                    // Location settings couldn't be opened
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: const Text(
+                            'Unable to open location settings. Please enable location services manually.'),
+                      ),
+                    );
+                  }
+                },
+                child: const Text('Enable Location'),
+              ),
+            ],
+          ),
+    );
+  }
+
+
 }
+
+
+
+
+
 
 
 

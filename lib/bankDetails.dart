@@ -56,6 +56,7 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
   }
 
   DateTime selectedDate = DateTime(2020);
+  DateTime selectedDate1 = DateTime(2020);
   // Future<void> _selectDate(BuildContext context) async {
   //   DateTime? picked = await showDatePicker(
   //     context: context,
@@ -115,7 +116,7 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
                     ),
                     Container(
                       height: 1.0,
-                      width: 120,
+                      width: 90,
                       decoration: const BoxDecoration(
                         color: Colors.cyanAccent,
                       ),
@@ -142,7 +143,7 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
                     ),
                     Container(
                       height: 1.0,
-                      width: 120,
+                      width: 90,
                       decoration: BoxDecoration(
                         color: customColor,
                       ),
@@ -218,6 +219,7 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
 
 
               TextFormField(
+                readOnly: true,
                 controller: fssaiExpiryController,
                 decoration: const InputDecoration(
                   labelText: 'FSSAI License Expiry Date',
@@ -233,6 +235,8 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
               dateFormat: "dd-MMMM-yyyy",
               locale: DateTimePickerLocale.en_us,
               looping: true,
+                barrierDismissible: false,
+
               );
 
               if (datePicked != null && datePicked != selectedDate) {
@@ -300,15 +304,17 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
               //   ),
               // ),
               TextFormField(
+                readOnly: true,
                 controller: shopActExpiryController,
                 decoration: const InputDecoration(
                   labelText: 'Shop Act License Expiry Date',
                   hintText: 'Enter Shop Act license Expiry Date',
                 ),
                 onTap: () async {
-                  var datePicked = await DatePicker.showSimpleDatePicker(
+
+                  var datePicked1 = await DatePicker.showSimpleDatePicker(
                     context,
-                    initialDate: selectedDate,
+                    initialDate: selectedDate1,
                     firstDate: DateTime(2020),
                     lastDate: DateTime(2090),
                     dateFormat: "dd-MMMM-yyyy",
@@ -316,22 +322,25 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
                     looping: true,
                   );
 
-                  if (datePicked != null && datePicked != selectedDate) {
+
+                  if (datePicked1 != null && datePicked1 != selectedDate1) {
                     setState(() {
-                      selectedDate = datePicked;
+                      selectedDate1 = datePicked1;
                     });
+
                   }
 
 
-                  String input1 = DateFormat('dd-MMM-yyyy').format(datePicked!);
+                  String input1 = DateFormat('dd-MMM-yyyy').format(datePicked1!);
 
 
 
                   shopActExpiryController.text = (input1);
                   final snackBar =
-                  SnackBar(content: Text("Date Picked $datePicked"));
+                  SnackBar(content: Text("Date Picked $datePicked1"));
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 },
+
 
               ),
               SizedBox(height: 30,),

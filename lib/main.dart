@@ -47,6 +47,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/product_list.dart';
 import 'package:flutter_project/registeration.dart';
+import 'package:flutter_project/seller_googleMap.dart';
 import 'package:flutter_project/seller_profile_option.dart';
 import 'package:flutter_project/language_selection_page.dart';
 import 'package:flutter_project/logIn_Screen.dart';
