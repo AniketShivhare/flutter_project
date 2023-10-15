@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/user_current_location.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geolocator_android/geolocator_android.dart';
@@ -9,12 +10,10 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import 'apis/sellerModel.dart';
 import 'bankDetails.dart';
-import 'current_location_screen.dart';
 import 'dropdown.dart';
 import 'package:multiselect/multiselect.dart';
 import 'package:flutter_project/shopTime_weekDays_class.dart';
 import 'package:flutter_project/dialog_of_registration.dart';
-import 'package:flutter_project/current_location_screen.dart';
 
 bool food_present=false;
 
@@ -251,25 +250,25 @@ class _SellerRegistrationPageState extends State<Regest> {
                 ),
               ),
               const SizedBox(height: 32),
-              ElevatedButton(onPressed: () async {
-                _getCurrentLocation().then((value) {
-                  lat = '${value?.latitude}';
-                  long = '${value?.longitude}';
-                  setState(() {
-                    msg = 'lat:$lat, long:$long';
-                    print(msg);
-                  });
-                });
-              },
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.grey.shade300)
-                ),
-                child: const Text('Save my current location',
-                  ),
-              ),
+              // ElevatedButton(onPressed: () async {
+              //   _getCurrentLocation().then((value) {
+              //     lat = '${value?.latitude}';
+              //     long = '${value?.longitude}';
+              //     setState(() {
+              //       msg = 'lat:$lat, long:$long';
+              //       print(msg);
+              //     });
+              //   });
+              // },
+              //   style: ButtonStyle(
+              //       backgroundColor: MaterialStateProperty.all<Color>(Colors.grey.shade300)
+              //   ),
+              //   child: const Text('Save my current location',
+              //     ),
+              // ),
 
 
-             const SizedBox(height: 32),
+             // const SizedBox(height: 32),
               //
               // Container(
               //   child: ElevatedButton(
@@ -283,69 +282,15 @@ class _SellerRegistrationPageState extends State<Regest> {
 
               ElevatedButton(onPressed: (){
                 Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
-                  return const CurrentLocationScreen();
+                  return const GetUserCurrentLocationScreen();
                 }));
-              }, child: const Text("User current location")),
+              }, child: const Text("Save My current location"),
+                  style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.grey.shade300)
+      ),
+              ),
 
 
-              //
-              // const SizedBox(height: 32),
-              // ElevatedButton(
-              //   onPressed: () async {
-              //     try {
-              //       await CurrentLocationScreen().;
-              //     } catch (e) {
-              //       print('Error: $e');
-              //       CurrentLocationScreen._showLocationServiceDisabledDialog(context);
-              //     }
-              //   },
-              //   style: ElevatedButton.styleFrom(
-              //     shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(20.0),
-              //     ),
-              //   ),
-              //   child: Row(
-              //     mainAxisSize: MainAxisSize.min,
-              //     children: [
-              //       const Icon(Icons.location_history),
-              //       const SizedBox(width: 8.0),
-              //       const Text("Current Location"),
-              //     ],
-              //   ),
-              // ),
-
-
-
-        ElevatedButton(
-          onPressed: () async {
-            // Request location permission
-
-           _showLocationServiceDisabledDialog(context);
-
-            // LocationPermission permission =  await _showLocationServiceDisabledDialog(context);
-            // LocationPermission permission = await _requestLocationPermission();
-
-
-            // if (permission == LocationPermission.always ||
-            //     permission == LocationPermission.whileInUse)
-              if(dia == true)
-            {
-              // If permission granted, navigate to the map screen
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => CurrentLocationScreen()),
-              );
-            } else {
-              // Handle case when permission is not granted
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Text('Location permission denied.'),
-                ),
-              );
-            }
-          },
-          child: const Text('Request Location Permission'),
-        ),
 
 
 
@@ -413,50 +358,12 @@ class _SellerRegistrationPageState extends State<Regest> {
   }
 
 
-  Future<LocationPermission> _requestLocationPermission() async {
-    LocationPermission permission = await Geolocator.requestPermission();
-    return permission;
-  }
+  // Future<LocationPermission> _requestLocationPermission() async {
+  //   LocationPermission permission = await Geolocator.requestPermission();
+  //   return permission;
+  // }
 
-  void _showLocationServiceDisabledDialog(BuildContext context) async {
-    // ... (existing code)
-    showDialog(
-      context: context,
-      builder: (context) =>
-          AlertDialog(
-            title: const Text('Location Services Disabled'),
-            content: const Text(
-                'Please enable location services to use this feature.'),
-            actions: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop(); // Close the dialog
-                },
-                child: const Text('Cancel'),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  // Open location settings to allow the user to enable location services
-                  bool isOpened = await Geolocator.openLocationSettings();
-                  dia = true;
-                  if (isOpened) {
-                    Navigator.of(context).pop(); // Close the dialog
-                  } else {
-                    // Location settings couldn't be opened
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: const Text(
-                            'Unable to open location settings. Please enable location services manually.'),
-                      ),
-                    );
-                  }
-                },
-                child: const Text('Enable Location'),
-              ),
-            ],
-          ),
-    );
-  }
+
 
 
 }
