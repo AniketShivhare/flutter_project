@@ -43,7 +43,6 @@
 //   }
 // }
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_project/product_list.dart';
 import 'package:flutter_project/registeration.dart';
@@ -60,14 +59,13 @@ import 'date_selector.dart';
 import 'dropdown.dart';
 
 void main() {
-  runApp( MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-   MyApp({super.key});
+  MyApp({super.key});
 
   // This widget is the root of your application.
-
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +73,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-
-        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF08FFC8),),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Color(0xFF08FFC8),
+        ),
         useMaterial3: true,
       ),
       home: Regest(),

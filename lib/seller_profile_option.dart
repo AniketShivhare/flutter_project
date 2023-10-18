@@ -10,25 +10,30 @@ class profileOptions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text('Profile Page',)),
-        backgroundColor:  Color(0xFF08FFC8),
+        title: Center(
+            child: Text(
+          'Profile Page',
+        )),
+        backgroundColor: Color(0xFF08FFC8),
       ),
       body: Container(
         width: double.infinity,
         child: Column(
-           // mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 50,),
+            SizedBox(
+              height: 50,
+            ),
             Container(
               height: 50,
               width: 290,
               child: ElevatedButton(
-                onPressed:() {
+                onPressed: () {
                   Navigator.push(
                     context,
-                  MaterialPageRoute(
-                      builder: (context) => SellerProfilePersonalDetails()),
+                    MaterialPageRoute(
+                        builder: (context) => SellerProfilePersonalDetails()),
                   );
                 },
                 child: Wrap(
@@ -39,11 +44,13 @@ class profileOptions extends StatelessWidget {
                       size: 28.0,
                     ),
                     SizedBox(
-                      width:10,
+                      width: 10,
                     ),
-                    Text("Personal Details", style:TextStyle(fontSize:18,color: Color(0xFF204969))),
+                    Text("Personal Details",
+                        style:
+                            TextStyle(fontSize: 18, color: Color(0xFF204969))),
                     SizedBox(
-                      width:43,
+                      width: 40,
                     ),
                     Icon(
                       Icons.arrow_circle_right_sharp,
@@ -54,13 +61,14 @@ class profileOptions extends StatelessWidget {
                 ),
               ),
             ),
-
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Container(
               height: 50,
               width: 290,
               child: ElevatedButton(
-                onPressed:() {
+                onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -75,11 +83,13 @@ class profileOptions extends StatelessWidget {
                       size: 28.0,
                     ),
                     SizedBox(
-                      width:10,
+                      width: 10,
                     ),
-                    Text("Shop Details", style:TextStyle(fontSize:18,color: Color(0xFF204969))),
+                    Text("Shop Details",
+                        style:
+                            TextStyle(fontSize: 18, color: Color(0xFF204969))),
                     SizedBox(
-                      width:70,
+                      width: 70,
                     ),
                     Icon(
                       Icons.arrow_circle_right_sharp,
@@ -90,8 +100,9 @@ class profileOptions extends StatelessWidget {
                 ),
               ),
             ),
-
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Container(
               height: 50,
               width: 290,
@@ -111,9 +122,11 @@ class profileOptions extends StatelessWidget {
                       size: 28.0,
                     ),
                     SizedBox(
-                      width:10,
+                      width: 10,
                     ),
-                    Text("Bank Account Details", style:TextStyle(fontSize:18,color: Color(0xFF204969))),
+                    Text("Bank Account Details",
+                        style:
+                            TextStyle(fontSize: 18, color: Color(0xFF204969))),
                     // SizedBox(
                     //   width:1,
                     // ),
@@ -126,11 +139,9 @@ class profileOptions extends StatelessWidget {
                 ),
               ),
             ),
-
           ],
         ),
       ),
-      
     );
   }
 }

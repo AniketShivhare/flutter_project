@@ -1,9 +1,11 @@
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project/apis/sellerProfile.dart';
 import 'package:flutter_project/registeration.dart';
 import 'package:flutter_project/services/User_api.dart';
+import 'package:flutter_project/services/sellerApi.dart';
+import 'package:flutter_project/services/sellerTokenId.dart';
 import 'package:http/http.dart' as http;
 import 'apis/Seller.dart';
 import 'dialog_of_registration.dart';
@@ -13,7 +15,8 @@ class SellerProfileShopDetails extends StatefulWidget {
   // final String title;
 
   @override
-  State<SellerProfileShopDetails> createState() => _SellerProfileShopDetailsState();
+  State<SellerProfileShopDetails> createState() =>
+      _SellerProfileShopDetailsState();
 }
 
 class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
@@ -24,81 +27,57 @@ class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
   var shopOpenController = TextEditingController();
   var shopCloseController = TextEditingController();
   var shopAddressController = TextEditingController();
+  String GstImage = "";
 
-  late Seller seller;
+  String sellerId = Candidate().id;
+  String sellerToken = Candidate().token;
+  late SellerProfile seller;
 
   @override
   initState() {
     fetchSeller();
   }
 
+  Future<void> fetchSeller() async {
+    seller = await SellerApi().getSellerProfile(sellerToken, sellerId);
 
-  Future <void> fetchSeller() async {
-    seller = await UserApi.getSeller();
-
-    shopNameController.text = seller.shopName!;
-    GSTController.text = seller.gstin!.gstinNo!;
-    FSSAIController.text = seller.fssai!.licenseNumber!;
-    LandlineController.text = seller.landlineNumber!;
-    shopOpenController.text = seller.shopOpeningTime! as String;
-    shopCloseController.text = seller.shopClosingTime! as String;
-    shopAddressController.text= seller.address!.addressOfShop!;
-
-
+    shopNameController.text = seller.data.shopName;
+    GSTController.text = seller.data.gstin.gstinNo;
+    // GstImage = seller.data.gstin.gstinImage;
+    shopAddressController.text = seller.data.address.addressLine1;
+    LandlineController.text = seller.data.phone;
+    // FSSAIController.text = seller.data.;
+    // LandlineController.text = seller.data.;
+    // shopOpenController.text = seller.data.shopTimings.;
+    print(shopOpenController.text);
+    // shopCloseController.text = seller.data.shopTimings as String;
   }
 
   Future<void> postShopDetails() async {
-
-
     Map<String, dynamic> json = {
-      "shopName": shopNameController,
-      "gstin":{
-        "gstinNo": GSTController,
-      },
-      "fssai":{
-        "licenseNumber": FSSAIController,
-      },
-      "landlineNumber":LandlineController,
-      "shopOpeningTime":shopOpenController,
-      "shopClosingTime":shopCloseController,
-      "address":{
-        "addressOfShop": shopAddressController,
-      },
-
-
-
+      "shopName": shopNameController.text,
+      "gstinNo": GSTController.text,
+      // "licenseNumber": FSSAIController,
+      "phone": LandlineController.text,
+      // "shopOpeningTime": shopOpenController,
+      // "shopClosingTime": shopCloseController,
+      "addressLine1": shopAddressController.text,
     };
-    final apiUrl = 'https://api/seller/:sellerid/product';
-
-    var uri = Uri.parse(apiUrl);
-    try {
-      final response = await http.post(
-        uri,
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode(json),
-      );
-
-      if (response.statusCode == 201) {
-      } else {
-      }
-    } catch (e) {
-
-    }
+    final response =
+        await SellerApi().updateBankDetails(json, sellerId, sellerToken);
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Shop Details Updated")));
+    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
-
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
           title: Text("Edit Shop Details"),
         ),
-        body:  SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Container(
             color: Colors.white12,
             child: Padding(
@@ -107,35 +86,32 @@ class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                      height:20
-                  ),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
                         height: 140,
-
                         child: Column(
                           children: [
-                            const CircleAvatar(
+                            CircleAvatar(
                               radius: 60,
-                              backgroundImage: AssetImage('assets/images/dark.jpg'),
+                              backgroundImage:
+                                  AssetImage('assets/images/dark.jpg'),
                             ),
                             Text("GST Image")
                           ],
                         ),
                       ),
-                      const SizedBox(
-                          width:20
-                      ),
+                      const SizedBox(width: 20),
                       Container(
                         height: 140,
                         child: Column(
                           children: [
                             const CircleAvatar(
                               radius: 60,
-                              backgroundImage: AssetImage('assets/images/dark.jpg'),
+                              backgroundImage:
+                                  AssetImage('assets/images/dark.jpg'),
                             ),
                             Text("FSSAI Image")
                           ],
@@ -143,10 +119,7 @@ class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
                       ),
                     ],
                   ),
-
-                  const SizedBox(
-                      height:40
-                  ),
+                  const SizedBox(height: 40),
                   Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -156,14 +129,12 @@ class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
                               offset: Offset(0, 5),
                               color: Colors.deepOrange.withOpacity(.2),
                               spreadRadius: 2,
-                              blurRadius: 10
-                          )
-                        ]
-                    ),
+                              blurRadius: 10)
+                        ]),
                     child: TextFormField(
                       controller: shopNameController,
                       validator: (value) {
-                        if(value!.length<5) {
+                        if (value!.length < 5) {
                           return "shopname length must be 5";
                         } else {
                           return null;
@@ -179,9 +150,7 @@ class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                      height: 20
-                  ),
+                  const SizedBox(height: 20),
                   Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -191,19 +160,16 @@ class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
                               offset: Offset(0, 5),
                               color: Colors.deepOrange.withOpacity(.2),
                               spreadRadius: 2,
-                              blurRadius: 10
-                          )
-                        ]
-                    ),
+                              blurRadius: 10)
+                        ]),
                     child: TextFormField(
                         controller: LandlineController,
-                        decoration:  InputDecoration(
+                        decoration: InputDecoration(
                           labelText: 'Landline Number',
                           hintText: 'Enter your Landline number',
                           prefixIcon: const Icon(Icons.phone),
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0)
-                          ),
+                              borderRadius: BorderRadius.circular(30.0)),
                         ),
                         keyboardType: TextInputType.phone,
                         validator: (value) {
@@ -213,12 +179,9 @@ class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
                             return "number must be 10 digit long";
                           }
                           return null;
-                        }
-                    ),
+                        }),
                   ),
-                  const SizedBox(
-                      height: 20
-                  ),
+                  const SizedBox(height: 20),
                   Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -228,32 +191,29 @@ class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
                               offset: Offset(0, 5),
                               color: Colors.deepOrange.withOpacity(.2),
                               spreadRadius: 2,
-                              blurRadius: 10
-                          )
-                        ]
-                    ),
+                              blurRadius: 10)
+                        ]),
                     child: TextFormField(
-                        controller: shopAddressController,
-                        decoration:  InputDecoration(
-                          labelText: 'Shop Address here',
-                          hintText: 'Enter your Shop Address',
-                          prefixIcon: const Icon(Icons.location_on),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0)
-                          ),
-                        ),
-                        // keyboardType: TextInputType.phone,
-                        // validator: (value) {
-                        //   if (value == null) {
-                        //     return 'Please enter Shop Address';
-                        //   } else if (value.length != 10) {
-                        //     return "number must be 10 digit long";
-                        //   }
-                        //   return null;
-                        // }
+                      controller: shopAddressController,
+                      decoration: InputDecoration(
+                        labelText: 'Shop Address here',
+                        hintText: 'Enter your Shop Address',
+                        prefixIcon: const Icon(Icons.location_on),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0)),
+                      ),
+                      // keyboardType: TextInputType.phone,
+                      // validator: (value) {
+                      //   if (value == null) {
+                      //     return 'Please enter Shop Address';
+                      //   } else if (value.length != 10) {
+                      //     return "number must be 10 digit long";
+                      //   }
+                      //   return null;
+                      // }
                     ),
                   ),
-                  SizedBox(height:20),
+                  SizedBox(height: 20),
                   Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -263,14 +223,12 @@ class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
                               offset: Offset(0, 5),
                               color: Colors.deepOrange.withOpacity(.2),
                               spreadRadius: 2,
-                              blurRadius: 10
-                          )
-                        ]
-                    ),
+                              blurRadius: 10)
+                        ]),
                     child: TextFormField(
                       controller: GSTController,
                       validator: (value) {
-                        if(value!.length<5) {
+                        if (value!.length < 5) {
                           return "GST Number length must be greater than 5";
                         } else {
                           return null;
@@ -286,9 +244,7 @@ class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                      height: 20
-                  ),
+                  const SizedBox(height: 20),
                   Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -298,14 +254,12 @@ class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
                               offset: Offset(0, 5),
                               color: Colors.deepOrange.withOpacity(.2),
                               spreadRadius: 2,
-                              blurRadius: 10
-                          )
-                        ]
-                    ),
+                              blurRadius: 10)
+                        ]),
                     child: TextFormField(
                       controller: FSSAIController,
                       validator: (value) {
-                        if(value!.length<5) {
+                        if (value!.length < 5) {
                           return "FSSAI License length must be greater than 5";
                         } else {
                           return null;
@@ -321,9 +275,7 @@ class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                      height: 20
-                  ),
+                  const SizedBox(height: 20),
                   Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -333,15 +285,12 @@ class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
                               offset: Offset(0, 5),
                               color: Colors.deepOrange.withOpacity(.2),
                               spreadRadius: 2,
-                              blurRadius: 10
-                          )
-                        ]
-                    ),
-
+                              blurRadius: 10)
+                        ]),
                     child: TextFormField(
                       controller: shopOpenController,
                       validator: (value) {
-                        if(value!.length<5) {
+                        if (value!.length < 5) {
                           return "username length must be 5";
                         } else {
                           return null;
@@ -357,9 +306,7 @@ class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                      height: 20
-                  ),
+                  const SizedBox(height: 20),
                   Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -369,15 +316,12 @@ class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
                               offset: Offset(0, 5),
                               color: Colors.deepOrange.withOpacity(.2),
                               spreadRadius: 2,
-                              blurRadius: 10
-                          )
-                        ]
-                    ),
-
+                              blurRadius: 10)
+                        ]),
                     child: TextFormField(
                       controller: shopCloseController,
                       validator: (value) {
-                        if(value!.length<5) {
+                        if (value!.length < 5) {
                           return "username length must be 5";
                         } else {
                           return null;
@@ -393,29 +337,24 @@ class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
                       ),
                     ),
                   ),
-
-
-
                   const SizedBox(height: 22),
-
                   Container(
                     child: ElevatedButton(
                       child: Text('Edit Shop Time'),
-                      onPressed: (){
-                        showDialog(context: context,
+                      onPressed: () {
+                        showDialog(
+                            context: context,
                             barrierDismissible: false,
-                            builder: (BuildContext context){
+                            builder: (BuildContext context) {
                               return SimpleCustomAlert();
-                            }
-                        );
+                            });
                       },
                       style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(Colors.grey.shade300)
-                      ),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.grey.shade300)),
                     ),
                   ),
-
-                  SizedBox(height:40),
+                  SizedBox(height: 40),
                   Container(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -427,7 +366,6 @@ class _SellerProfileShopDetailsState extends State<SellerProfileShopDetails> {
               ),
             ),
           ),
-        )
-    );
+        ));
   }
 }
